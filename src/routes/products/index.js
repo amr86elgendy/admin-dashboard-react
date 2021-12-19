@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Table from '../../components/tables/ProductTable';
 import { FaPlus } from 'react-icons/fa';
-import { useGetProducts } from '../../apis/product';
+import { useGetProducts } from '../../functions/product';
 
 const Index = () => {
   const { isLoading, isError, data: productsData, error } = useGetProducts();

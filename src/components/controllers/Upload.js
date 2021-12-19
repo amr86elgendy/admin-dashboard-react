@@ -1,7 +1,7 @@
 import { ErrorMessage, FieldArray } from 'formik';
 import { useRef } from 'react';
 import { FaTrash, FaUpload } from 'react-icons/fa';
-import { useUploadImage } from '../../apis/product';
+import { useUploadImage } from '../../functions/product';
 
 const Upload = ({ label, name, ...rest }) => {
   const inputFile = useRef(null);

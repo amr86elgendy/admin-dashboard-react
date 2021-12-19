@@ -6,7 +6,7 @@ import {
   useCreateProduct,
   useGetProduct,
   useUpdateProduct,
-} from '../../apis/product';
+} from '../../functions/product';
 
 const ProductForm = () => {
   const params = useParams();

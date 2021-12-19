@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import FormControl from '../components/FormControl';
 import FormikContainer from '../components/FormikContainer';
 import { useAuthContext } from '../context/auth';
-import { useLogin } from '../apis/auth';
+import { useLogin } from '../functions/auth';
 
 const Login = () => {
   const navigate = useNavigate();

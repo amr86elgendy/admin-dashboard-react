@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useDeleteProduct } from '../../apis/product';
+import { useDeleteProduct } from '../../functions/product';
 
 const ProductTable = ({ products }) => {
   const { mutate: deleteProduct } = useDeleteProduct();

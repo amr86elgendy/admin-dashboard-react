@@ -16,7 +16,7 @@ function App() {
   
   async function showMe() {
     try {
-      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/showMe`, {
+      const res = await fetch(`/api/users/showMe`, {
         headers: { 'Content-Type': 'application/json' }
       })
       if (res.ok && res.status === 200) {

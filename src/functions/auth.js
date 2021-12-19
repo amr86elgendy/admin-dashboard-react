@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useMutation } from 'react-query';
 
 const login = (user) =>
-  axios.post(`/auth/login`, user);
+  axios.post(`/api/auth/login`, user);
 
 export function useLogin() {
   return useMutation(login);

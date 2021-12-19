@@ -33,6 +33,7 @@ function App() {
 
   useEffect(() => {
     showMe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

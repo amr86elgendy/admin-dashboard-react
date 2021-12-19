@@ -2,14 +2,16 @@ import { useQuery, useQueryClient, useMutation } from 'react-query';
 
 export function useGetProducts() {
   return useQuery('get-all-products', () =>
-    fetch('/api/products').then((res) => res.json())
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/products`).then((res) =>
+      res.json()
+    )
   );
 }
 
 // ##########################################################
 
 const createProduct = async (product) => {
-  const res = await fetch('/api/products', {
+  const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/products`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -30,7 +32,10 @@ export function useCreateProduct() {
 export function useGetProduct(productId, enabled) {
   return useQuery(
     'get-product',
-    () => fetch(`/api/products/${productId}`).then((res) => res.json()),
+    () =>
+      fetch(
+        `${process.env.REACT_APP_SERVER_URL}/api/products/${productId}`
+      ).then((res) => res.json()),
     {
       enabled,
     }
@@ -41,13 +46,16 @@ export function useGetProduct(productId, enabled) {
 
 const updateProduct = async (obj) => {
   console.log(obj.product);
-  const res = await fetch(`/api/products/${obj.productId}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(obj.product),
-  });
+  const res = await fetch(
+    `${process.env.REACT_APP_SERVER_URL}/api/products/${obj.productId}`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(obj.product),
+    }
+  );
   return await res.json();
 };
 
@@ -61,12 +69,15 @@ export function useUpdateProduct() {
 // ##########################################################
 
 export const deleteProduct = async (productId) => {
-  const res = await fetch(`/api/products/${productId}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const res = await fetch(
+    `${process.env.REACT_APP_SERVER_URL}/api/products/${productId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
   return await res.json();
 };
 export function useDeleteProduct() {
@@ -79,10 +90,13 @@ export function useDeleteProduct() {
 // ##########################################################
 
 const uploadImage = async (formData) => {
-  const res = await fetch('/api/products/uploadImage', {
-    method: 'POST',
-    body: formData,
-  });
+  const res = await fetch(
+    `${process.env.REACT_APP_SERVER_URL}/api/products/uploadImage`,
+    {
+      method: 'POST',
+      body: formData,
+    }
+  );
   return await res.json();
 };
 export function useUploadImage() {

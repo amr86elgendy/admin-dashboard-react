@@ -2,9 +2,13 @@ import axios from 'axios';
 import { useMutation } from 'react-query';
 
 const login = (user) =>
-  axios.post(`/api/auth/login`, user, {
-    headers: { 'Content-Type': 'application/json' },
-  });
+  axios.post(
+    `https://elgendy-ecommerce.herokuapp.com/api/auth/login`,
+    user,
+    {
+      headers: { 'Content-Type': 'application/json' },
+    }
+  );
 
 export function useLogin() {
   return useMutation(login);

@@ -1,12 +1,8 @@
+import axios from 'axios';
 import { useMutation } from 'react-query';
 
 const login = (user) =>
-  fetch(`${process.env.REACT_APP_SERVER_URL}/api/auth/login`, {
-    method: 'POST',
-    credentials: true,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(user)
-  })
+  axios.post(`${process.env.REACT_APP_SERVER_URL}/api/auth/login`, user);
 
 export function useLogin() {
   return useMutation(login);

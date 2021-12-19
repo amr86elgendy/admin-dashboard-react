@@ -8,9 +8,6 @@ import { GlobalProvider } from './context/global';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter as Router } from 'react-router-dom';
-import axios from 'axios';
-
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL + '/api';
 
 const queryClient = new QueryClient();
 

@@ -41,7 +41,7 @@ const Login = () => {
         if (res.ok) {
           const data = await res.json()
           dispatch('LOGIN_ADMIN', data);
-          localStorage.setItem('token', data.token)
+          // localStorage.setItem('token', data.token)
           navigate(from, { replace: true });
         } else {
           const data = await res.json();

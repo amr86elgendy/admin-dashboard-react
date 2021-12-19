@@ -10,13 +10,13 @@ const Login = () => {
   const { dispatch, isAuthenticated } = useAuthContext();
   const location = useLocation()
   const from = location.state?.from?.pathname || '/';
-  const { mutate: loginAdmin, isLoading } = useLogin();
+  const { mutate: loginAdmin } = useLogin();
 
   useEffect(() => {
     if (isAuthenticated) {
       navigate(from, { replace: true });
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, from]);
   
   const initialValues = {
     email: 'amr@tawfik.com',

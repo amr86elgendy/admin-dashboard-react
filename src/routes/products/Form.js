@@ -7,20 +7,13 @@ import {
   useGetProduct,
   useUpdateProduct,
 } from '../../apis/product';
-import { useEffect, useState } from 'react';
 
 const ProductForm = () => {
   const params = useParams();
   const navigate = useNavigate();
   const productId = params['*'].split('/')[1];
 
-  const {
-    mutate: createProduct,
-    data: createdProduct,
-    isLoading: createdLoading,
-    isError,
-    error,
-  } = useCreateProduct();
+  const { mutate: createProduct } = useCreateProduct();
 
   const { data: updatedData, isLoading: updatedLoading } = useGetProduct(
     productId,

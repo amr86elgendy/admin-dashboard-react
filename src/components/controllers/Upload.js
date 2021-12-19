@@ -5,7 +5,7 @@ import { useUploadImage } from '../../apis/product';
 
 const Upload = ({ label, name, ...rest }) => {
   const inputFile = useRef(null);
-  const { mutate: uploadImage, isLoading, error } = useUploadImage();
+  const { mutate: uploadImage } = useUploadImage();
   return (
     <div className='col-span-6 lg:col-span-6'>
       <label

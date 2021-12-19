@@ -2,7 +2,6 @@ import {
   IoChatbubblesOutline,
   IoHomeOutline,
   IoList,
-  IoLogOutOutline,
   IoPeopleOutline,
   IoPricetagsOutline,
 } from 'react-icons/io5';

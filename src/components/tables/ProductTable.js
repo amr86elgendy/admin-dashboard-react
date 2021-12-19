@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useDeleteProduct } from '../../apis/product';
 
 const ProductTable = ({ products }) => {
-  const { mutate: deleteProduct, data, isLoading, error } = useDeleteProduct();
+  const { mutate: deleteProduct } = useDeleteProduct();
 
   return (
     <div className='flex flex-col mb-8'>

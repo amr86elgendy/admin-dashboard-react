@@ -7,7 +7,6 @@ const login = (user) =>
     proxy: {
       protocol: 'https',
       host: 'elgendy-ecommerce.herokuapp.com',
-      port: 8000
     },
   });
 

@@ -1,13 +1,10 @@
-import axios from 'axios';
 import { useMutation } from 'react-query';
 
 const login = (user) =>
-  axios.post(`/api/auth/login`, user, {
+  fetch(`/api/auth/login`, {
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    proxy: {
-      protocol: 'https',
-      host: 'elgendy-ecommerce.herokuapp.com',
-    },
+    body: JSON.stringify(user)
   });
 
 export function useLogin() {

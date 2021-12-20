@@ -7,7 +7,7 @@ const login = (user) =>
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    credentials: 'include',
+    credentials: 'same-origin',
     body: JSON.stringify(user),
   });
 

@@ -6,9 +6,11 @@ import {
   useCreateProduct,
   useGetProduct,
   useUpdateProduct,
-} from '../../functions/product';
+} from '../../apis/product';
+import { useAuthContext } from '../../context/auth';
 
 const ProductForm = () => {
+  const { token } = useAuthContext();
   const params = useParams();
   const navigate = useNavigate();
   const productId = params['*'].split('/')[1];
@@ -46,14 +48,25 @@ const ProductForm = () => {
     return errors;
   };
 
-  const handleSubmit = (values, onSubmitProps) => {
+  const handleSubmit = (values, submitProps) => {
+    console.log({ values });
     if (productId && updatedData) {
-      updateProducte({ productId, product: values });
+      updateProducte(
+        { productId, product: values, token },
+        {
+          onSuccess: () => navigate('/products'),
+          onError: (err) => console.log(err.response.data),
+        }
+      );
     } else {
-      createProduct(values);
+      createProduct(
+        { product: values, token },
+        {
+          onSuccess: () => navigate('/products'),
+          onError: (err) => console.log(err.response.data),
+        }
+      );
     }
-    onSubmitProps.resetForm();
-    navigate('/products');
   };
   return (
     <div className='bg-[#f8f8fb]'>

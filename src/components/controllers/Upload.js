@@ -1,11 +1,14 @@
 import { ErrorMessage, FieldArray } from 'formik';
 import { useRef } from 'react';
 import { FaTrash, FaUpload } from 'react-icons/fa';
-import { useUploadImage } from '../../functions/product';
+import { useUploadImage } from '../../apis/product';
+import { useAuthContext } from '../../context/auth';
 
 const Upload = ({ label, name, ...rest }) => {
+  const { token } = useAuthContext();
   const inputFile = useRef(null);
-  const { mutate: uploadImage } = useUploadImage();
+  const { mutate: uploadImage, isError, error } = useUploadImage();
+
   return (
     <div className='col-span-6 lg:col-span-6'>
       <label
@@ -17,14 +20,19 @@ const Upload = ({ label, name, ...rest }) => {
       <FieldArray name={name}>
         {(props) => {
           const images = props.form.values.images;
-
+          
           const handleChange = async (e) => {
             const imageFile = e.target.files[0];
+            
             const formData = new FormData();
             formData.append('image', imageFile);
-            uploadImage(formData, {
-              onSuccess: ({ image }) => props.push(image),
-            });
+            uploadImage(
+              { formData, token },
+              {
+                onSettled: () => props.form.setFieldTouched(name),
+                onSuccess: ({ image }) => props.push(image),
+              }
+            );
           };
 
           return (
@@ -63,6 +71,7 @@ const Upload = ({ label, name, ...rest }) => {
           );
         }}
       </FieldArray>
+      {isError && <div className='text-red-600'>{error.response.data.msg}</div>}
       <ErrorMessage name={name}>
         {(msg) => <div className='text-red-600'>{msg}</div>}
       </ErrorMessage>

@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useDeleteProduct } from '../../functions/product';
+import { useDeleteProduct } from '../../apis/product';
+import { useAuthContext } from '../../context/auth';
 
 const ProductTable = ({ products }) => {
+  const { token } = useAuthContext();
   const { mutate: deleteProduct } = useDeleteProduct();
 
   return (
@@ -120,7 +122,15 @@ const ProductTable = ({ products }) => {
                       </Link>
                       <button
                         className='text-red-500 hover:text-red-700'
-                        onClick={() => deleteProduct(product._id)}
+                        onClick={() =>
+                          deleteProduct(
+                            { productId: product._id, token },
+                            {
+                              onSuccess: () => {}, // display toast
+                              onError: (err) => console.log(err.response.data),
+                            }
+                          )
+                        }
                       >
                         Delete
                       </button>

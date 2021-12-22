@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import FormControl from '../components/FormControl';
 import FormikContainer from '../components/FormikContainer';
 import { useAuthContext } from '../context/auth';
-import { useLogin } from '../functions/auth';
+import { useLogin } from '../apis/auth';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -35,17 +35,16 @@ const Login = () => {
   };
 
   const handleSubmit = (values, onSubitProps) => {
-    console.log({ values, onSubitProps });
+    // console.log({ values, onSubitProps });
     loginAdmin(values, {
       onSuccess: async (res) => {
-        if (res.ok) {
-          const data = await res.json()
+        if (res.status === 200) {
+          const { data } = res
           dispatch('LOGIN_ADMIN', data);
-          // localStorage.setItem('token', data.token)
+          localStorage.setItem('ishop-dashboard-token', data.token)
           navigate(from, { replace: true });
         } else {
-          const data = await res.json();
-          console.log(data);
+          console.log(res);
           // handle error message
         }
       },
@@ -76,7 +75,7 @@ const Login = () => {
               name='password'
               span='6'
             />
-            <button className='btn'>
+            <button type='submit' className='btn'>
               Save
             </button>
           </FormikContainer>

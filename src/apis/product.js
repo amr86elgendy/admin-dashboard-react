@@ -1,24 +1,33 @@
+import axios from 'axios';
 import { useQuery, useQueryClient, useMutation } from 'react-query';
 
 export function useGetProducts() {
-  return useQuery('get-all-products', () =>
-    fetch(`${process.env.REACT_APP_SERVER_URL}/api/products`).then((res) =>
-      res.json()
-    )
+  return useQuery(
+    'get-all-products',
+    async () => {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_SERVER_URL}/api/products`
+      );
+      return data;
+    },
+    { staleTime: 30000 } // make new request after 30 second
   );
 }
 
 // ##########################################################
 
-const createProduct = async (product) => {
-  const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/products`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(product),
-  });
-  return await res.json();
+const createProduct = async ({ product, token }) => {
+  const { data } = await axios.post(
+    `${process.env.REACT_APP_SERVER_URL}/api/products`,
+    product,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return data;
 };
 export function useCreateProduct() {
   const queryClient = useQueryClient();
@@ -31,11 +40,13 @@ export function useCreateProduct() {
 
 export function useGetProduct(productId, enabled) {
   return useQuery(
-    'get-product',
-    () =>
-      fetch(
+    ['get-product', productId],
+    async () => {
+      const { data } = await axios.get(
         `${process.env.REACT_APP_SERVER_URL}/api/products/${productId}`
-      ).then((res) => res.json()),
+      );
+      return data;
+    },
     {
       enabled,
     }
@@ -44,19 +55,18 @@ export function useGetProduct(productId, enabled) {
 
 // ##########################################################
 
-const updateProduct = async (obj) => {
-  console.log(obj.product);
-  const res = await fetch(
-    `${process.env.REACT_APP_SERVER_URL}/api/products/${obj.productId}`,
+const updateProduct = async ({ productId, product, token }) => {
+  const { data } = await axios.patch(
+    `${process.env.REACT_APP_SERVER_URL}/api/products/${productId}`,
+    product,
     {
-      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(obj.product),
     }
   );
-  return await res.json();
+  return data;
 };
 
 export function useUpdateProduct() {
@@ -68,17 +78,17 @@ export function useUpdateProduct() {
 
 // ##########################################################
 
-export const deleteProduct = async (productId) => {
-  const res = await fetch(
+export const deleteProduct = async ({ productId, token }) => {
+  const { data } = await axios.delete(
     `${process.env.REACT_APP_SERVER_URL}/api/products/${productId}`,
     {
-      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        authorization: `Bearer ${token}`,
       },
     }
   );
-  return await res.json();
+  return data;
 };
 export function useDeleteProduct() {
   const queryClient = useQueryClient();
@@ -89,16 +99,19 @@ export function useDeleteProduct() {
 
 // ##########################################################
 
-const uploadImage = async (formData) => {
-  const res = await fetch(
+const uploadImage = async ({ formData, token }) => {
+  const { data } = await axios.post(
     `${process.env.REACT_APP_SERVER_URL}/api/products/uploadImage`,
+    formData,
     {
-      method: 'POST',
-      body: formData,
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${token}`,
+      },
     }
   );
-  return await res.json();
+  return data;
 };
 export function useUploadImage() {
-  return useMutation(uploadImage);
+  return useMutation(uploadImage, { retry: false });
 }

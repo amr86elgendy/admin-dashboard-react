@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/layout';
@@ -16,15 +17,21 @@ function App() {
   
   async function showMe() {
     try {
-      const res = await fetch(
+      const res = await axios.get(
         `${process.env.REACT_APP_SERVER_URL}/api/users/showMe`,
         {
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${localStorage.getItem('ishop-dashboard-token')}`,
+          },
         }
       );
-      if (res.ok && res.status === 200) {
-        const data = await res.json();
-        dispatch('LOGIN_ADMIN', data)
+      if (res.status === 200) {
+        const { data } = res;
+        dispatch('LOGIN_ADMIN', {
+          user: data,
+          token: localStorage.getItem('ishop-dashboard-token'),
+        });
         navigate(-1, { replace: true });
       } else {
         navigate('/login', { replace: true });

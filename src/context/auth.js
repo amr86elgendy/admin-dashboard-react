@@ -8,14 +8,14 @@ const reducer = (state, action) => {
         ...state,
         isAuthenticated: true,
         user: action.payload.user,
-        // token: action.payload.token,
+        token: action.payload.token,
       };
     case 'LOGOUT_ADMIN':
       return {
         ...state,
         isAuthenticated: false,
         user: null,
-        // token: null,
+        token: null,
       };
     default:
       return state;
@@ -26,7 +26,7 @@ const reducer = (state, action) => {
 const initialState = {
   isAuthenticated: false,
   user: null,
-  // token: null,
+  token: null,
 };
 
 // create context

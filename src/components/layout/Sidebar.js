@@ -39,8 +39,8 @@ const Sidebar = () => {
               <span className='relative flex items-center justify-center h-14 min-w-[64px]'>
                 {li.icon}
               </span>
-              <span className='relative flex px-2.5 h-14 items-center whitespace-nowrap text-lg'>
-                {li.title}
+              <span className='relative flex px-2.5 h-14 items-center whitespace-nowrap text-lg capitalize'>
+                {li.title === '' ? 'home' : li.title}
               </span>
             </Link>
           </li>

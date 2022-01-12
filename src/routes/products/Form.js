@@ -17,12 +17,12 @@ const ProductForm = () => {
 
   const { mutate: createProduct } = useCreateProduct();
 
-  const { data: updatedData, isLoading: updatedLoading } = useGetProduct(
+  const { data: updatedData, isFetching: updatedLoading } = useGetProduct(
     productId,
     params['*'].startsWith('update')
   );
-
-  const { mutate: updateProducte } = useUpdateProduct();
+console.log(updatedData);
+  const { mutate: updateProduct } = useUpdateProduct();
 
   const initialValues = {
     name: '',
@@ -49,9 +49,8 @@ const ProductForm = () => {
   };
 
   const handleSubmit = (values, submitProps) => {
-    console.log({ values });
     if (productId && updatedData) {
-      updateProducte(
+      updateProduct(
         { productId, product: values, token },
         {
           onSuccess: () => navigate('/products'),

@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 const UserTable = ({ users }) => {
   return (
@@ -53,8 +54,8 @@ const UserTable = ({ users }) => {
                         <div className='flex-shrink-0 w-10 h-10'>
                           <img
                             className='w-10 h-10 rounded-full'
-                            src='' //{`${process.env.REACT_APP_SERVER_URL}${user.images[0]}`}
-                            alt=''//{user.name}
+                            src='https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y' //{`${process.env.REACT_APP_SERVER_URL}${user.images[0]}`}
+                            alt={user.name}
                           />
                         </div>
                         <div className='ml-4'>
@@ -86,15 +87,15 @@ const UserTable = ({ users }) => {
                     </td>
                     {/* Created At */}
                     <td className='px-6 py-4 text-center whitespace-nowrap'>
-                      <span className='inline-flex px-2 font-semibold leading-5 text-green-800 bg-purple-100 rounded-full'>
-                        {user.createdAt}
+                      <span className='inline-flex px-2 py-1 text-sm font-semibold leading-5 text-[#2a3042] bg-purple-100 rounded-full'>
+                        {moment(user.createdAt).fromNow()}
                       </span>
                     </td>
                     {/* Actions */}
                     <td className='px-6 py-4 text-sm font-medium text-right whitespace-nowrap'>
                       <Link to={`/users/update/${user._id}`}>
                         <button className='mr-2 text-blue-500 hover:text-blue-700'>
-                          Edit
+                          Details
                         </button>
                       </Link>
                       <button className='text-red-500 hover:text-red-700'>

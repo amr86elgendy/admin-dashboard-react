@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useQuery, useQueryClient, useMutation } from 'react-query';
+import { useQuery } from 'react-query';
 
 export function useGetUsers(token) {
   return useQuery(

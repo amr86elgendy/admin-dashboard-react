@@ -68,9 +68,7 @@ console.log(updatedData, productId);
       );
     }
   };
-const amr = () => {
-  console.log('amr');
-}
+
   return (
     <div className='bg-[#f8f8fb]'>
       <div className='pt-6 pl-10'>

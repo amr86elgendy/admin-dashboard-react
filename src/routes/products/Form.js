@@ -21,7 +21,7 @@ const ProductForm = () => {
     productId,
     params['*'].startsWith('update')
   );
-console.log(updatedData);
+console.log(updatedData, productId);
   const { mutate: updateProduct } = useUpdateProduct();
 
   const initialValues = {
@@ -49,6 +49,7 @@ console.log(updatedData);
   };
 
   const handleSubmit = (values, submitProps) => {
+    console.log('yessss');
     if (productId && updatedData) {
       updateProduct(
         { productId, product: values, token },
@@ -67,6 +68,9 @@ console.log(updatedData);
       );
     }
   };
+const amr = () => {
+  console.log('amr');
+}
   return (
     <div className='bg-[#f8f8fb]'>
       <div className='pt-6 pl-10'>
@@ -80,7 +84,7 @@ console.log(updatedData);
             <h1>Loading...</h1>
           ) : (
             <FormikContainer
-              initialValues={updatedData ? updatedData.product : initialValues}
+              initialValues={updatedData?.product || initialValues}
               validate={validate}
               onSubmit={handleSubmit}
               title='product form'
@@ -142,7 +146,9 @@ console.log(updatedData);
               />
               <FormControl control='radio' label='Featured' name='featured' />
               <FormControl control='upload' label='Images' name='images' />
-              <button className='btn'>save</button>
+              <button className='btn' type='submit'>
+                save
+              </button>
             </FormikContainer>
           )}
         </div>

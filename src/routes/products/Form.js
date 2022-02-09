@@ -21,8 +21,10 @@ const ProductForm = () => {
     productId,
     params['*'].startsWith('update')
   );
-console.log(updatedData, productId);
+  // console.log(updatedData, productId);
   const { mutate: updateProduct } = useUpdateProduct();
+
+  // useEffect(() => customizeValues(), [updatedData]);
 
   const initialValues = {
     name: '',
@@ -49,8 +51,7 @@ console.log(updatedData, productId);
   };
 
   const handleSubmit = (values, submitProps) => {
-    console.log('yessss');
-    if (productId && updatedData) {
+    if (productId) {
       updateProduct(
         { productId, product: values, token },
         {
@@ -69,6 +70,18 @@ console.log(updatedData, productId);
     }
   };
 
+  const customizeValues = (product) => {
+    if (product) {
+      const initialProduct = {};
+      const fields = Object.keys(initialValues);
+      Object.entries(product || {}).map(([key, value]) =>
+        fields.includes(key) ? (initialProduct[key] = value) : null
+      );
+      return initialProduct;
+    }
+    return initialValues;
+  };
+
   return (
     <div className='bg-[#f8f8fb]'>
       <div className='pt-6 pl-10'>
@@ -82,7 +95,7 @@ console.log(updatedData, productId);
             <h1>Loading...</h1>
           ) : (
             <FormikContainer
-              initialValues={updatedData?.product || initialValues}
+              initialValues={customizeValues(updatedData?.product)}
               validate={validate}
               onSubmit={handleSubmit}
               title='product form'
@@ -144,9 +157,6 @@ console.log(updatedData, productId);
               />
               <FormControl control='radio' label='Featured' name='featured' />
               <FormControl control='upload' label='Images' name='images' />
-              <button className='btn' type='submit'>
-                save
-              </button>
             </FormikContainer>
           )}
         </div>

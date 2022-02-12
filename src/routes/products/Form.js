@@ -8,6 +8,7 @@ import {
   useUpdateProduct,
 } from '../../apis/product';
 import { useAuthContext } from '../../context/auth';
+import Loader from '../../components/Loader';
 
 const ProductForm = () => {
   const { token } = useAuthContext();
@@ -17,14 +18,12 @@ const ProductForm = () => {
 
   const { mutate: createProduct } = useCreateProduct();
 
-  const { data: updatedData, isFetching: updatedLoading } = useGetProduct(
+  const { data: updatedData, isLoading } = useGetProduct(
     productId,
     params['*'].startsWith('update')
   );
   // console.log(updatedData, productId);
   const { mutate: updateProduct } = useUpdateProduct();
-
-  // useEffect(() => customizeValues(), [updatedData]);
 
   const initialValues = {
     name: '',
@@ -50,6 +49,18 @@ const ProductForm = () => {
     return errors;
   };
 
+  const customizeValues = (product) => {
+    if (product) {
+      const initialProduct = {};
+      const fields = Object.keys(initialValues);
+      Object.entries(product || {}).map(([key, value]) =>
+        fields.includes(key) ? (initialProduct[key] = value) : null
+      );
+      return initialProduct;
+    }
+    return initialValues;
+  };
+
   const handleSubmit = (values, submitProps) => {
     if (productId) {
       updateProduct(
@@ -70,18 +81,6 @@ const ProductForm = () => {
     }
   };
 
-  const customizeValues = (product) => {
-    if (product) {
-      const initialProduct = {};
-      const fields = Object.keys(initialValues);
-      Object.entries(product || {}).map(([key, value]) =>
-        fields.includes(key) ? (initialProduct[key] = value) : null
-      );
-      return initialProduct;
-    }
-    return initialValues;
-  };
-
   return (
     <div className='bg-[#f8f8fb]'>
       <div className='pt-6 pl-10'>
@@ -91,8 +90,8 @@ const ProductForm = () => {
       </div>
       <div className='px-4 overflow-hidden sm:px-0'>
         <div className='bg-white w-full px-4 py-5 m-auto my-8 border sm:p-6 sm:w-8/12 order-[#dbdfea] shadow-card'>
-          {updatedLoading ? (
-            <h1>Loading...</h1>
+          {isLoading ? (
+            <Loader />
           ) : (
             <FormikContainer
               initialValues={customizeValues(updatedData?.product)}

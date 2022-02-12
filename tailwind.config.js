@@ -9,6 +9,15 @@ module.exports = {
         input: '0 0 0 3px rgb(101 118 255 / 10%)',
         error: '0 0 0 3px rgb(232 83 71 / 10%)',
       },
+      animation: {
+        loader: 'loader 1s linear infinite',
+      },
+      keyframes: {
+        loader: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+      },
     },
   },
   plugins: [],

@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom';
 import Table from '../../components/tables/ProductTable';
 import { FaPlus } from 'react-icons/fa';
 import { useGetProducts } from '../../apis/product';
+import Loader from '../../components/Loader';
 
 const Index = () => {
   const { isLoading, isError, data: productsData, error } = useGetProducts();
-  
-  if (isLoading) return <h1>Loading...</h1>;
+  // return <Loader />
+  if (isLoading) return <Loader />;
   if (isError) return <h1>{error.response.data}</h1>;
 
   return (

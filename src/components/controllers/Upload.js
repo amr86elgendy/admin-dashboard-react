@@ -23,7 +23,7 @@ const Upload = ({ label, name, ...rest }) => {
           
           const handleChange = async (e) => {
             const imageFile = e.target.files[0];
-            
+            console.log(imageFile);
             const formData = new FormData();
             formData.append('image', imageFile);
             uploadImage(
@@ -40,7 +40,7 @@ const Upload = ({ label, name, ...rest }) => {
               {images.map((img, i) => (
                 <div className='relative w-24 h-20 mx-2 group' key={i}>
                   <img
-                    src={`${process.env.REACT_APP_SERVER_URL}${img}`}
+                    src={img}
                     alt=''
                     srcSet=''
                     className='w-full h-full group-hover:opacity-50'

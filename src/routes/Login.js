@@ -75,9 +75,6 @@ const Login = () => {
               name='password'
               span='6'
             />
-            <button type='submit' className='btn'>
-              Save
-            </button>
           </FormikContainer>
         </div>
       </div>

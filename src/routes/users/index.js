@@ -3,12 +3,13 @@ import { FaPlus } from 'react-icons/fa';
 import { useGetUsers } from '../../apis/user';
 import Table from '../../components/tables/UserTable';
 import { useAuthContext } from '../../context/auth';
+import Loader from '../../components/Loader';
 
 const UsersList = () => {
   const { token } = useAuthContext()
   const { isLoading, isError, data: usersData, error } = useGetUsers(token);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
   if (isError) return <h1>{error.response.data}</h1>;
   
   return (

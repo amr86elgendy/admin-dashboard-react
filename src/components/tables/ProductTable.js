@@ -70,7 +70,7 @@ const ProductTable = ({ products }) => {
                         <div className='flex-shrink-0 w-10 h-10'>
                           <img
                             className='w-10 h-10 rounded-full'
-                            src={`${process.env.REACT_APP_SERVER_URL}${product.images[0]}`}
+                            src={product.images[0]}
                             alt={product.name}
                           />
                         </div>

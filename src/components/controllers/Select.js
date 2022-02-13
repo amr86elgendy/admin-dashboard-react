@@ -5,7 +5,7 @@ const Select = ({ label, name, options, ...rest }) => {
     <div className='col-span-6 lg:col-span-3'>
       <label
         htmlFor={name}
-        className='block mb-2 text-sm font-medium capitalize text-[#344357]'
+        className='block mb-2 text-sm font-medium capitalize text-secondary'
       >
         {name}
       </label>

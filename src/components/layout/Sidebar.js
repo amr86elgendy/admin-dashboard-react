@@ -10,7 +10,7 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`fixed top-0 bottom-0 left-0 overflow-hidden transition-all duration-500 bg-[#2a3042] border-l-8 border-[#2a3042] ${
+      className={`fixed top-0 bottom-0 left-0 overflow-hidden transition-all duration-500 bg-primary border-l-8 border-primary ${
         openSidebar ? 'w-64' : 'w-20'
       }`}
     >
@@ -29,12 +29,12 @@ const Sidebar = () => {
           <li
             key={i}
             className={`group relative w-full hover:bg-gray-50 rounded-tl-3xl rounded-bl-3xl text-white link
-              ${li.title === path && 'selected text-[#2a3042] bg-gray-50'}
+              ${li.title === path && 'selected text-primary bg-gray-50'}
             `}
           >
             <Link
               to={`/${li.title}`}
-              className='relative flex w-full cursor-pointer group-hover:text-[#2a3042]'
+              className='relative flex w-full cursor-pointer group-hover:text-primary'
             >
               <span className='relative flex items-center justify-center h-14 min-w-[64px]'>
                 {li.icon}

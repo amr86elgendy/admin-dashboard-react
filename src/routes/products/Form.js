@@ -85,7 +85,7 @@ const ProductForm = () => {
     <div className='bg-[#f8f8fb]'>
       <div className='pt-6 pl-10'>
         <Link to='/products'>
-          <button className='btn'>Back To Products</button>
+          <button className='capitalize btn'>back to products</button>
         </Link>
       </div>
       <div className='px-4 overflow-hidden sm:px-0'>

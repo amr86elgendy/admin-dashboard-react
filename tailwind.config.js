@@ -1,8 +1,13 @@
+
 module.exports = {
   mode: 'jit',
   content: ['./src/**/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      colors: {
+        primary: '#2a3042',
+        secondary: '#3f4555',
+      },
       boxShadow: {
         nav: '0 11px 10px -10px rgb(85 85 85 / 40%)',
         card: '0 1px 3px #00000026',
@@ -22,3 +27,4 @@ module.exports = {
   },
   plugins: [],
 };
+

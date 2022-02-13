@@ -21,12 +21,12 @@ const Navbar = () => {
       style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}
     >
       <div
-        className='items-center hidden cursor-pointer text-[#2a3042] md:flex'
+        className='items-center hidden cursor-pointer text-primary md:flex'
         onClick={() => dispatch('TOGGLE_SIDEBAR')}
       >
         {!openSidebar ? <IoMenu size={30} /> : <IoClose size={30} />}
       </div>
-      <h3 className='flex-1 tracking-wider text-center text-[#2a3042] capitalize'>
+      <h3 className='flex-1 tracking-wider text-center capitalize text-primary'>
         admin dashboard
       </h3>
     </nav>

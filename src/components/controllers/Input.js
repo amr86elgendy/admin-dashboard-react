@@ -5,7 +5,7 @@ const Input = ({ label, name, span, ...rest }) => {
     <div className={`col-span-6 lg:col-span-${span}`}>
       <label
         htmlFor={name}
-        className='block mb-2 text-sm font-medium capitalize text-[#344357]'
+        className='block mb-2 text-sm font-medium capitalize text-secondary'
       >
         {name}
       </label>

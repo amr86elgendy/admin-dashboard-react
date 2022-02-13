@@ -20,19 +20,19 @@ const UserTable = ({ users }) => {
                     scope='col'
                     className='px-6 py-3 text-xs font-medium tracking-wider text-center text-gray-500 uppercase'
                   >
-                    Number Of Orders
+                    Orders
                   </th>
                   <th
                     scope='col'
                     className='px-6 py-3 text-xs font-medium tracking-wider text-center text-gray-500 uppercase'
                   >
-                    Number Of Messages
+                    Messages
                   </th>
                   <th
                     scope='col'
                     className='px-6 py-3 text-xs font-medium tracking-wider text-center text-gray-500 uppercase'
                   >
-                    Number Of Reviews
+                    Reviews
                   </th>
                   <th
                     scope='col'
@@ -87,13 +87,13 @@ const UserTable = ({ users }) => {
                     </td>
                     {/* Created At */}
                     <td className='px-6 py-4 text-center whitespace-nowrap'>
-                      <span className='inline-flex px-2 py-1 text-sm font-semibold leading-5 text-[#2a3042] bg-purple-100 rounded-full'>
+                      <span className='inline-flex px-2 py-1 text-sm font-semibold leading-5 bg-purple-100 rounded-full text-primary'>
                         {moment(user.createdAt).fromNow()}
                       </span>
                     </td>
                     {/* Actions */}
                     <td className='px-6 py-4 text-sm font-medium text-right whitespace-nowrap'>
-                      <Link to={`/users/update/${user._id}`}>
+                      <Link to={`/users/details/${user._id}`}>
                         <button className='mr-2 text-blue-500 hover:text-blue-700'>
                           Details
                         </button>

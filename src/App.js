@@ -7,6 +7,8 @@ import Home from './routes/home';
 import UsersList from './routes/users';
 import ProductsList from './routes/products';
 import ProductForm from './routes/products/Form';
+import UserForm from './routes/users/Form';
+import UserDetails from './routes/users/Details';
 import { useAuthContext } from './context/auth';
 import { useNavigate } from 'react-router-dom';
 import PrivateRoute from './routes/PrivateRoute';
@@ -63,6 +65,22 @@ function App() {
           element={
             <PrivateRoute>
               <UsersList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/users/create'
+          element={
+            <PrivateRoute>
+              <UserForm />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/users/details/:id'
+          element={
+            <PrivateRoute>
+              <UserDetails />
             </PrivateRoute>
           }
         />

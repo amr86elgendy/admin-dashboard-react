@@ -3,24 +3,25 @@ import { useRef } from 'react';
 import { FaTrash, FaUpload } from 'react-icons/fa';
 import { useUploadImage } from '../../apis/product';
 import { useAuthContext } from '../../context/auth';
+import { ImSpinner8 } from 'react-icons/im';
 
 const Upload = ({ label, name, ...rest }) => {
   const { token } = useAuthContext();
   const inputFile = useRef(null);
-  const { mutate: uploadImage, isError, error } = useUploadImage();
+  const { mutate: uploadImage, isError, error, isLoading } = useUploadImage();
 
   return (
     <div className='col-span-6 lg:col-span-6'>
       <label
         htmlFor={name}
-        className='block mb-2 text-sm font-medium capitalize text-[#344357]'
+        className='block mb-2 text-sm font-medium capitalize text-secondary'
       >
         {name}
       </label>
       <FieldArray name={name}>
         {(props) => {
           const images = props.form.values.images;
-          
+
           const handleChange = async (e) => {
             const imageFile = e.target.files[0];
             console.log(imageFile);
@@ -65,7 +66,12 @@ const Upload = ({ label, name, ...rest }) => {
                 className='flex flex-col items-center justify-center w-20 h-20 border-4 border-dashed appearance-none'
                 onClick={() => inputFile.current.click()}
               >
-                <FaUpload /> Upload
+                {isLoading ? (
+                  <ImSpinner8 className='mx-auto animate-spin' size={25} />
+                ) : (
+                  <FaUpload />  
+                )}
+                upload
               </button>
             </div>
           );

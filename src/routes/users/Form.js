@@ -1,13 +1,10 @@
 import React from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useCreateUser, useGetUser } from '../../apis/user';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCreateUser } from '../../apis/user';
 import FormControl from '../../components/FormControl';
 import FormikContainer from '../../components/FormikContainer';
-import Loader from '../../components/Loader';
-import { useAuthContext } from '../../context/auth';
 
 const Form = () => {
-  const { token } = useAuthContext();
   const navigate = useNavigate();
 
   const { mutate: createUser } = useCreateUser();

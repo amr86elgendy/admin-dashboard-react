@@ -15,7 +15,7 @@ const Navbar = () => {
   
   return (
     <nav
-      className={`sticky top-0 left-0 right-0 z-50 flex px-4 py-3 transition-shadow duration-200 backdrop-filter backdrop-blur ${
+      className={`sticky top-0 left-0 right-0 z-20 flex px-4 py-3 transition-shadow duration-200 backdrop-filter backdrop-blur ${
         fixedNav ? 'shadow-nav' : 'shadow-card'
       }`}
       style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}

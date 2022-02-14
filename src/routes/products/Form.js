@@ -82,17 +82,17 @@ const ProductForm = () => {
   };
 
   return (
-    <div className='bg-[#f8f8fb]'>
+    <section className='bg-[#f8f8fb] min-h-[calc(100vh-56px)]'>
       <div className='pt-6 pl-10'>
         <Link to='/products'>
           <button className='capitalize btn'>back to products</button>
         </Link>
       </div>
       <div className='px-4 overflow-hidden sm:px-0'>
-        <div className='bg-white w-full px-4 py-5 m-auto my-8 border sm:p-6 sm:w-8/12 order-[#dbdfea] shadow-card'>
-          {isLoading ? (
-            <Loader />
-          ) : (
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div className='bg-white w-full px-4 py-5 m-auto my-8 border sm:p-6 sm:w-8/12 order-[#dbdfea] shadow-card'>
             <FormikContainer
               initialValues={customizeValues(updatedData?.product)}
               validate={validate}
@@ -157,10 +157,10 @@ const ProductForm = () => {
               <FormControl control='radio' label='Featured' name='featured' />
               <FormControl control='upload' label='Images' name='images' />
             </FormikContainer>
-          )}
-        </div>
+          </div>
+        )}
       </div>
-    </div>
+    </section>
   );
 };
 

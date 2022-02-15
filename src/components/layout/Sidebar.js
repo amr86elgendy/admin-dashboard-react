@@ -1,4 +1,4 @@
-import { Link, useLocation, useParams} from 'react-router-dom';
+import { Link, useLocation} from 'react-router-dom';
 import { mainLinks } from '../../constants/sidebar';
 import { useAuthContext } from '../../context/auth';
 import { useGlobalContext } from '../../context/global';

@@ -2,9 +2,11 @@ import {
   IoChatbubblesOutline,
   IoHomeOutline,
   IoList,
+  IoLogOutOutline,
   IoPeopleOutline,
   IoPricetagsOutline,
 } from 'react-icons/io5';
+
 export const mainLinks = [
   {
     icon: <IoHomeOutline size={30} />,
@@ -26,12 +28,10 @@ export const mainLinks = [
     icon: <IoChatbubblesOutline size={30} />,
     title: 'messages',
   },
-  // {
-  //   icon: <IoLogOutOutline size={33} />,
-  //   title: 'Sign Out',
-  // },
+  {
+    icon: <IoLogOutOutline size={33} />,
+    title: 'sign out',
+  },
 ];
 
-export const usersHeader = ['username', 'email', 'action'];
-export const productHeader = ['no', 'name', 'category', 'status', 'action'];
 

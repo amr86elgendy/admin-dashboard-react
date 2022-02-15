@@ -6,6 +6,8 @@ import Login from './routes/Login';
 import Home from './routes/home';
 import UsersList from './routes/users';
 import ProductsList from './routes/products';
+import OrdersList from './routes/orders';
+import MessagesList from './routes/messages';
 import ProductForm from './routes/products/Form';
 import UserForm from './routes/users/Form';
 import { useAuthContext } from './context/auth';
@@ -88,6 +90,22 @@ function App() {
           element={
             <PrivateRoute>
               <ProductForm />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/orders'
+          element={
+            <PrivateRoute>
+              <OrdersList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/messages'
+          element={
+            <PrivateRoute>
+              <MessagesList />
             </PrivateRoute>
           }
         />

@@ -14,6 +14,9 @@ export function useLogin() {
 
 // ##########################################################
 
-export function logout() {
-  fetch(`${process.env.REACT_APP_SERVER_URL}/api/auth/logout`);
-}
+export const logout = async () => {
+  const { data } = await axios.get(
+    `${process.env.REACT_APP_SERVER_URL}/api/auth/logout`
+  );
+  return data;
+};

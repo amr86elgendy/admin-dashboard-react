@@ -6,7 +6,7 @@ h1 {
   @apply text-5xl font-extrabold;
 }
 h2 {
-  @apply text-3xl font-bold;
+  @apply text-xl font-bold sm:text-2xl md:text-3xl;
 }
 h3 {
   @apply text-2xl font-semibold;
@@ -16,7 +16,7 @@ h4 {
 }
 
 .btn {
-  @apply inline-flex items-center justify-center px-4 py-2 text-white capitalize transition-all duration-200 border-2 border-transparent rounded shadow-sm bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2;
+  @apply inline-flex items-center justify-center px-2 py-2 text-xs text-white capitalize transition-all duration-200 border-2 border-transparent rounded shadow-sm md:px-4 bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-base;
 }
 
 *,
@@ -29,6 +29,7 @@ h4 {
 
 body {
   background-color: #f8f8fb;
+  font-family: 'Poppins', sans-serif;
 }
 a:hover {
   color: unset;

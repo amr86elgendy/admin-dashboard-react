@@ -9,8 +9,8 @@ const Index = ({ children }) => {
     <main className=''>
       <Sidebar />
       <div
-        className={`absolute right-0 left-20 transition-all duration-500 ${
-          openSidebar && 'left-64'
+        className={`absolute right-0 transition-all duration-500 ${
+          openSidebar ? 'left-64' : 'left-0 sm:left-20'
         }
         `}
       >

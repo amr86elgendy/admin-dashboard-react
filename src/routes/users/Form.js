@@ -33,7 +33,7 @@ const Form = () => {
   };
 
   return (
-    <div className='bg-[#f8f8fb]'>
+    <div className='bg-[#f8f8fb] min-h-[calc(100vh-56px)]'>
       <div className='pt-6 pl-10'>
         <Link to='/users'>
           <button className='capitalize btn'>back to users</button>

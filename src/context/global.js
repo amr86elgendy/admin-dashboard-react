@@ -5,6 +5,8 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'TOGGLE_SIDEBAR':
       return { ...state, openSidebar: !state.openSidebar };
+    case 'TOGGLE_SIDEBAR_FULL':
+      return { ...state, openSidebarFull: !state.openSidebarFull };
     default:
       return state;
   }
@@ -13,6 +15,7 @@ const reducer = (state, action) => {
 // initial state
 const initialState = {
   openSidebar: false,
+  openSidebarFull: false
 };
 
 // create context

@@ -17,8 +17,8 @@ const UsersList = () => {
         <Loader />
       ) : (
         <>
-          <nav className='flex items-center justify-between px-10 py-4 mb-8'>
-            <h2 className='tracking-widest uppercase text-[#364a63]'>
+          <nav className='flex items-center justify-between py-4 mb-8 md:px-8'>
+            <h2 className='md:tracking-widest uppercase text-[#364a63]'>
               users list
             </h2>
             <Link to='/users/create'>

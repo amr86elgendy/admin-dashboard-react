@@ -10,7 +10,7 @@ const UserTable = ({ users }) => {
     <>
       <div className='flex flex-col mb-8'>
         <div className='-my-2 overflow-x-auto'>
-          <div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
+          <div className='inline-block min-w-full py-2 align-middle md:px-6 lg:px-8'>
             <div className='overflow-hidden border-b border-gray-200 shadow sm:rounded-lg'>
               <table className='min-w-full divide-y divide-gray-200'>
                 <thead className='bg-gray-100'>

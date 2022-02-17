@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/layout';
@@ -13,13 +13,17 @@ import UserForm from './routes/users/Form';
 import { useAuthContext } from './context/auth';
 import { useNavigate } from 'react-router-dom';
 import PrivateRoute from './routes/PrivateRoute';
+import Loader from './components/Loader';
 
 function App() {
   const { dispatch } = useAuthContext();
   const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false)
   
   async function showMe() {
     try {
+      setIsLoading(true)
       const res = await axios.get(
         `${process.env.REACT_APP_SERVER_URL}/api/users/showMe`,
         {
@@ -30,6 +34,7 @@ function App() {
         }
       );
       if (res.status === 200) {
+        setIsLoading(false)
         const { data } = res;
         dispatch('LOGIN_ADMIN', {
           user: data,
@@ -37,9 +42,11 @@ function App() {
         });
         navigate(-1, { replace: true });
       } else {
+        setIsLoading(false)
         navigate('/login', { replace: true });
       }
     } catch (error) {
+      setIsLoading(false)
       console.log(error);
     }
   }
@@ -48,67 +55,21 @@ function App() {
     showMe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  
+  if (isLoading) return <Loader />
   return (
     <Layout>
       <Routes>
         <Route path='/login' element={<Login />} />
-        <Route
-          path='/'
-          element={
-            <PrivateRoute>
-              <Home />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path='/users'
-          element={
-            <PrivateRoute>
-              <UsersList />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path='/users/create'
-          element={
-            <PrivateRoute>
-              <UserForm />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path='/products'
-          element={
-            <PrivateRoute>
-              <ProductsList />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path='/products/*'
-          element={
-            <PrivateRoute>
-              <ProductForm />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path='/orders'
-          element={
-            <PrivateRoute>
-              <OrdersList />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path='/messages'
-          element={
-            <PrivateRoute>
-              <MessagesList />
-            </PrivateRoute>
-          }
-        />
+        <Route element={<PrivateRoute />}>
+          <Route path='/' element={<Home />} />
+          <Route path='/users' element={<UsersList />} />
+          <Route path='/users/create' element={<UserForm />} />
+          <Route path='/products' element={<ProductsList />} />
+          <Route path='/products/*' element={<ProductForm />} />
+          <Route path='/orders' element={<OrdersList />} />
+          <Route path='/messages' element={<MessagesList />} />
+        </Route>
       </Routes>
     </Layout>
   );

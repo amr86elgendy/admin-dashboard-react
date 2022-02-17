@@ -16,14 +16,16 @@ const ProductForm = () => {
   const navigate = useNavigate();
   const productId = params['*'].split('/')[1];
 
-  const { mutate: createProduct } = useCreateProduct();
+  const { mutate: createProduct, isLoading: loadCreateProduct } =
+    useCreateProduct();
 
-  const { data: updatedData, isLoading } = useGetProduct(
+  const { data: updatedData, isLoading: loadGetProduct } = useGetProduct(
     productId,
     params['*'].startsWith('update')
   );
   // console.log(updatedData, productId);
-  const { mutate: updateProduct } = useUpdateProduct();
+  const { mutate: updateProduct, isLoading: loadUpdateProduct } =
+    useUpdateProduct();
 
   const initialValues = {
     name: '',
@@ -89,7 +91,7 @@ const ProductForm = () => {
         </Link>
       </div>
       <div className='px-4 overflow-hidden sm:px-0'>
-        {isLoading ? (
+        {loadGetProduct ? (
           <Loader />
         ) : (
           <div className='bg-white w-full px-4 py-5 m-auto my-8 border sm:p-6 sm:w-8/12 order-[#dbdfea] shadow-card'>
@@ -97,6 +99,7 @@ const ProductForm = () => {
               initialValues={customizeValues(updatedData?.product)}
               validate={validate}
               onSubmit={handleSubmit}
+              isLoading={productId ? loadUpdateProduct : loadCreateProduct}
               title='product form'
             >
               <FormControl

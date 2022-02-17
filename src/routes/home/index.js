@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Charts from '../../components/charts';
 
 export default function Home() {
@@ -9,9 +10,9 @@ export default function Home() {
         <div className='relative p-4 bg-white rounded shadow-card'>
           <div className='flex items-center justify-between mb-8'>
             <h2 className='font-semibold text-[#223260]'>recent orders</h2>
-            <button className='px-4 py-0.5 text-[#223260] capitalize transition-all duration-200 bg-white rounded hover:bg-[#223260] border border-[#223260] hover:text-white'>
-              view all
-            </button>
+            <Link to='/orders'>
+              <button className='btn'>view all</button>
+            </Link>
           </div>
           {/* <Table /> */}
         </div>
@@ -19,9 +20,9 @@ export default function Home() {
         <div className='relative p-4 bg-white rounded shadow-card'>
           <div className='flex items-center justify-between mb-8'>
             <h2 className='font-semibold text-[#223260]'>special customers</h2>
-            <button className='px-4 py-0.5 text-[#223260] capitalize transition-all duration-200 bg-white rounded hover:bg-[#223260] border border-[#223260] hover:text-white'>
-              view all
-            </button>
+            <Link to='/users'>
+              <button className='btn'>view all</button>
+            </Link>
           </div>
           {/* <Table /> */}
         </div>

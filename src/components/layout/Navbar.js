@@ -3,16 +3,17 @@ import { useGlobalContext } from '../../context/global';
 import { IoMenu, IoClose } from 'react-icons/io5';
 
 const Navbar = () => {
-  const [fixedNav, setFixedNav] = useState(false)
+  const [fixedNav, setFixedNav] = useState(false);
   const { dispatch, openSidebar } = useGlobalContext();
-  
+
+  const handlefixedNav = () =>
+    window.pageYOffset === 0 ? setFixedNav(false) : setFixedNav(true);
+
   useEffect(() => {
-    window.addEventListener('scroll', () => {
-      if (window.pageYOffset === 0) setFixedNav(false);
-      else setFixedNav(true);
-    });
+    window.addEventListener('scroll', () => handlefixedNav);
+    return () => window.removeEventListener('scroll', handlefixedNav);
   }, []);
-  
+
   return (
     <nav
       className={`sticky top-0 left-0 right-0 z-20 flex px-4 py-3 transition-shadow duration-200 backdrop-filter backdrop-blur ${

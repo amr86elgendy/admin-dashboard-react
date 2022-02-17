@@ -5,7 +5,7 @@ import { useGetUser } from '../../apis/user';
 import Loader from '../../components/Loader';
 import { useAuthContext } from '../../context/auth';
 
-const Details = ({ open, onClose, id }) => {
+const DetailModal = ({ open, onClose, id }) => {
   const { token } = useAuthContext();
   const { data, isLoading } = useGetUser(id, token, open);
 
@@ -34,7 +34,7 @@ const Details = ({ open, onClose, id }) => {
               className='absolute text-gray-400 top-4 right-4 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6'
               onClick={onClose}
             >
-              <span className='sr-only'>Close</span>
+
               <IoClose className='w-6 h-6' aria-hidden='true' />
             </button>
             <div className='grid w-full grid-cols-1 gap-y-8 sm:gap-x-6 sm:grid-cols-12'>
@@ -81,4 +81,4 @@ const Details = ({ open, onClose, id }) => {
   );
 };
 
-export default Details;
+export default DetailModal;

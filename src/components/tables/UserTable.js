@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import DetailModal from '../../routes/users/Details';
+import DetailModal from '../../routes/users/DetailModal';
 import moment from 'moment';
 
 const UserTable = ({ users }) => {

@@ -7,6 +7,16 @@ const reducer = (state, action) => {
       return { ...state, openSidebar: !state.openSidebar };
     case 'TOGGLE_SIDEBAR_FULL':
       return { ...state, openSidebarFull: !state.openSidebarFull };
+    case 'OPEN_DELETE_MODAL':
+      return {
+        ...state,
+        deleteModal: { open: true, id: action.payload.id },
+      };
+    case 'CLOSE_DELETE_MODAL':
+      return {
+        ...state,
+        deleteModal: { open: false, id: null },
+      };
     default:
       return state;
   }
@@ -15,7 +25,11 @@ const reducer = (state, action) => {
 // initial state
 const initialState = {
   openSidebar: false,
-  openSidebarFull: false
+  openSidebarFull: false,
+  deleteModal: {
+    open: false,
+    id: null,
+  },
 };
 
 // create context

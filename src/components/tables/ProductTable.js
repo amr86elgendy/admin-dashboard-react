@@ -1,138 +1,157 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useMemo } from 'react';
+import { useTable } from 'react-table';
+// import { productsCols } from './Columns';
+import { useGlobalContext } from '../../context/global';
 import DeleteModal from '../../routes/products/DeleteModal';
+import { Link } from 'react-router-dom';
 
 const ProductTable = ({ products }) => {
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [id, setId] = useState(null);
-
+  const { deleteModal, dispatch } = useGlobalContext();
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'name',
+        accessor: ({ _id, images, name }) => (
+          <div className='flex items-center'>
+            <div className='flex-shrink-0 w-10 h-10'>
+              <img
+                className='w-10 h-10 rounded-full'
+                src={images[0]}
+                alt={name}
+              />
+            </div>
+            <div className='ml-4'>
+              <div className='text-sm font-medium text-gray-900'>{name}</div>
+              <div className='text-sm text-gray-500'>{_id}</div>
+            </div>
+          </div>
+        ),
+      },
+      {
+        Header: 'brand',
+        accessor: 'brand',
+        className: 'text-center text-gray-500',
+      },
+      {
+        Header: 'category',
+        accessor: 'category',
+        className: 'text-center text-gray-500',
+      },
+      {
+        Header: 'quantity',
+        accessor: ({ quantity }) => (
+          <>
+            <div className='text-gray-900'>{quantity}</div>
+            <span className='inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full'>
+              in Stock
+            </span>
+          </>
+        ),
+        className: 'text-center',
+      },
+      {
+        Header: 'sold',
+        accessor: ({ sold }) => (
+          <span className='inline-flex px-2 font-semibold leading-5 text-green-800 bg-purple-100 rounded-full'>
+            {sold}
+          </span>
+        ),
+        className: 'text-center',
+      },
+      {
+        Header: 'price',
+        accessor: 'price',
+        className: 'text-center text-gray-500',
+      },
+      {
+        Header: 'reviews',
+        accessor: 'numReviews',
+        className: 'text-center text-gray-500',
+      },
+      {
+        id: 'expander',
+        className: 'text-sm font-medium text-right',
+        accessor: ({ _id }) => (
+          <>
+            <Link to={`/products/update/${_id}`}>
+              <button className='mr-2 text-blue-500 hover:text-blue-700'>
+                Edit
+              </button>
+            </Link>
+            <button
+              className='text-red-500 hover:text-red-700'
+              onClick={() => dispatch('OPEN_DELETE_MODAL', {id: _id})}
+            >
+              Delete
+            </button>
+          </>
+        ),
+      },
+    ],
+    []
+  );
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({
+      columns,
+      data: products,
+    });
+  
   return (
     <>
       <div className='flex flex-col mb-8'>
         <div className='-my-2 overflow-x-auto'>
           <div className='inline-block min-w-full py-2 align-middle md:px-6 lg:px-8'>
             <div className='overflow-hidden border-b border-gray-200 shadow sm:rounded-lg'>
-              <table className='min-w-full divide-y divide-gray-200'>
+              <table
+                className='min-w-full divide-y divide-gray-200'
+                {...getTableProps()}
+              >
+                {/* Table Header */}
                 <thead className='bg-gray-100'>
-                  <tr>
-                    <th
-                      scope='col'
-                      className='px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase'
-                    >
-                      Name
-                    </th>
-                    <th
-                      scope='col'
-                      className='px-6 py-3 text-xs font-medium tracking-wider text-center text-gray-500 uppercase'
-                    >
-                      Brand
-                    </th>
-                    <th
-                      scope='col'
-                      className='px-6 py-3 text-xs font-medium tracking-wider text-center text-gray-500 uppercase'
-                    >
-                      Category
-                    </th>
-                    <th
-                      scope='col'
-                      className='px-6 py-3 text-xs font-medium tracking-wider text-center text-gray-500 uppercase'
-                    >
-                      Quantity
-                    </th>
-                    <th
-                      scope='col'
-                      className='px-6 py-3 text-xs font-medium tracking-wider text-center text-gray-500 uppercase'
-                    >
-                      Sold
-                    </th>
-                    <th
-                      scope='col'
-                      className='px-6 py-3 text-xs font-medium tracking-wider text-center text-gray-500 uppercase'
-                    >
-                      Price
-                    </th>
-                    <th
-                      scope='col'
-                      className='px-6 py-3 text-xs font-medium tracking-wider text-center text-gray-500 uppercase'
-                    >
-                      Reviews
-                    </th>
-                    <th scope='col' className='relative px-6 py-3'>
-                      <span className='sr-only'>Edit</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className='bg-white divide-y divide-gray-200'>
-                  {products.map((product) => (
-                    <tr key={product._id}>
-                      {/* name & Image & id */}
-                      <td className='px-6 py-4 whitespace-nowrap'>
-                        <div className='flex items-center'>
-                          <div className='flex-shrink-0 w-10 h-10'>
-                            <img
-                              className='w-10 h-10 rounded-full'
-                              src={product.images[0]}
-                              alt={product.name}
-                            />
-                          </div>
-                          <div className='ml-4'>
-                            <div className='text-sm font-medium text-gray-900'>
-                              {product.name}
-                            </div>
-                            <div className='text-sm text-gray-500'>
-                              {product._id}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      {/* Brand */}
-                      <td className='px-6 py-4 text-center text-gray-500 whitespace-nowrap'>
-                        {product.brand}
-                      </td>
-                      {/* Category */}
-                      <td className='px-6 py-4 text-center text-gray-500 whitespace-nowrap'>
-                        {product.category}
-                      </td>
-                      {/* Quantity */}
-                      <td className='px-6 py-4 text-center whitespace-nowrap'>
-                        <div className='text-gray-900'>{product.quantity}</div>
-                        <span className='inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full'>
-                          in Stock
-                        </span>
-                      </td>
-                      {/* Sold */}
-                      <td className='px-6 py-4 text-center whitespace-nowrap'>
-                        <span className='inline-flex px-2 font-semibold leading-5 text-green-800 bg-purple-100 rounded-full'>
-                          {product.sold}
-                        </span>
-                      </td>
-                      {/* Price */}
-                      <td className='px-6 py-4 text-center text-gray-500 whitespace-nowrap'>
-                        {product.price}
-                      </td>
-                      {/* Number Of Reviews */}
-                      <td className='px-6 py-4 text-center text-gray-500 whitespace-nowrap'>
-                        {product.numReviews}
-                      </td>
-                      {/* Actions */}
-                      <td className='px-6 py-4 text-sm font-medium text-right whitespace-nowrap'>
-                        <Link to={`/products/update/${product._id}`}>
-                          <button className='mr-2 text-blue-500 hover:text-blue-700'>
-                            Edit
-                          </button>
-                        </Link>
-                        <button
-                          className='text-red-500 hover:text-red-700'
-                          onClick={() => {
-                            setOpenDeleteModal(true);
-                            setId(product._id);
-                          }}
-                        >
-                          Delete
-                        </button>
-                      </td>
+                  {headerGroups.map((headerGroup) => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                      {headerGroup.headers.map((column) => {
+                        // console.log(column);
+                        return (
+                          <th
+                            {...column.getHeaderProps()}
+                            className={`px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase ${
+                              column.Header === 'name'
+                                ? 'text-left'
+                                : 'text-center'
+                            }`}
+                          >
+                            {column.render('Header')}
+                          </th>
+                        );
+                      })}
                     </tr>
                   ))}
+                </thead>
+                {/* Table Body */}
+                <tbody
+                  {...getTableBodyProps()}
+                  className='bg-white divide-y divide-gray-200'
+                >
+                  {rows.map((row) => {
+                    prepareRow(row);
+                    return (
+                      <tr {...row.getRowProps()}>
+                        {row.cells.map((cell) => {
+                          const { className } = cell.column;
+                          console.log(cell);
+                          return (
+                            <td
+                              {...cell.getCellProps()}
+                              className={`px-6 py-4 whitespace-nowrap ${className}`}
+                            >
+                              {cell.render('Cell')}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -140,9 +159,9 @@ const ProductTable = ({ products }) => {
         </div>
       </div>
       <DeleteModal
-        open={openDeleteModal}
-        onClose={() => setOpenDeleteModal (false)}
-        id={id}
+        open={deleteModal.open}
+        onClose={() => dispatch('CLOSE_DELETE_MODAL')}
+        id={deleteModal.id}
       />
     </>
   );

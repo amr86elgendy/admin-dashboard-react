@@ -1,99 +1,48 @@
 import { useMemo } from 'react';
 import { useSortBy, useTable } from 'react-table';
 import DetailModal from '../../routes/users/DetailModal';
-import moment from 'moment';
 import { GoArrowBoth, GoArrowUp, GoArrowDown } from 'react-icons/go';
 import { useGlobalContext } from '../../context/global';
+import { UsersCols } from '../../routes/users/Columns';
 
 const UserTable = ({ users }) => {
   const { detailModal, dispatch } = useGlobalContext();
 
-  const sortType = useMemo(
-    () => (rowA, rowB, columnId) => {
-      if (rowA?.original[columnId] > rowB?.original[columnId]) return 1;
-      if (rowB?.original[columnId] > rowA?.original[columnId]) return -1;
-      return 0;
-    },
-    []
-  );
-
   const data = useMemo(() => users, [users]);
-  const columns = useMemo(
-    () => [
+  const columns = useMemo(() => UsersCols, []);
+
+  const tableActions = (tableProps) => {
+    tableProps.visibleColumns.push((columns) => [
+      ...columns,
       {
-        Header: 'name',
-        align: 'left',
-        disableSortBy: true,
-        accessor: ({ _id, name }) => (
-          <div className='flex items-center'>
-            <div className='flex-shrink-0 w-10 h-10'>
-              <img
-                className='w-10 h-10 rounded-full'
-                src='https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
-                alt={name}
-              />
-            </div>
-            <div className='ml-4'>
-              <div className='text-sm font-medium text-gray-900'>{name}</div>
-              <div className='text-sm text-gray-500'>{_id}</div>
-            </div>
-          </div>
-        ),
-      },
-      {
-        Header: 'orders',
-        accessor: 'orders',
-      },
-      {
-        Header: 'messages',
-        accessor: 'messages',
-      },
-      {
-        Header: 'reviews',
-        accessor: 'reviews',
-        className: 'text-center',
-      },
-      {
-        Header: 'createdAt',
-        accessor: ({ createdAt }) => (
-          <span className='inline-flex px-2 py-1 text-sm font-semibold leading-5 bg-purple-100 rounded-full text-primary'>
-            {moment(createdAt).fromNow()}
-          </span>
-        ),
-        className: 'text-center',
-        sortType,
-      },
-      {
-        id: 'expander',
+        id: 'actions',
         disableSortBy: true,
         className: 'text-sm font-medium text-right',
-        accessor: ({ _id }) => {
-          return (
-            <>
-              <button
-                className='mr-2 text-blue-500 hover:text-blue-700'
-                onClick={() => dispatch('OPEN_DETAIL_MODAL', { id: _id })}
-              >
-                Details
-              </button>
+        Cell: ({ row }) => (
+          <>
+            <button
+              className='mr-2 text-blue-500 hover:text-blue-700'
+              onClick={() =>
+                dispatch('OPEN_DETAIL_MODAL', { id: row.original._id })
+              }
+            >
+              Details
+            </button>
 
-              <button className='text-red-500 hover:text-red-700'>
-                Delete
-              </button>
-            </>
-          );
-        },
+            <button className='text-red-500 hover:text-red-700'>Delete</button>
+          </>
+        ),
       },
-    ],
-    [dispatch, sortType]
-  );
-
+    ]);
+  };
+  
   const { getTableProps, getTableBodyProps, headers, rows, prepareRow } =
     useTable(
       {
         columns,
         data,
       },
+      tableActions,
       useSortBy
     );
 

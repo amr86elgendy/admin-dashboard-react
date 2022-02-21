@@ -3,6 +3,7 @@ import Table from '../../components/tables/ProductTable';
 import { FaPlus } from 'react-icons/fa';
 import { useGetProducts } from '../../apis/product';
 import Loader from '../../components/Loader';
+import Filters from './Filters';
 
 const Index = () => {
   const { isLoading, isError, data: productsData, error } = useGetProducts();
@@ -19,6 +20,7 @@ const Index = () => {
             <h2 className='uppercase text-[#364a63]'>
               Product list
             </h2>
+            <Filters />
             <Link to='/products/create'>
               <button className='btn'>
                 <FaPlus className='mr-2' /> Create Product

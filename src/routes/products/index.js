@@ -16,7 +16,7 @@ const Index = () => {
       ) : (
         <>
           <nav className='flex items-center justify-between py-4 mb-8 md:px-8'>
-            <h2 className='md:tracking-widest uppercase text-[#364a63]'>
+            <h2 className='uppercase text-[#364a63]'>
               Product list
             </h2>
             <Link to='/products/create'>

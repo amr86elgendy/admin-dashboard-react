@@ -33,9 +33,9 @@ const Navbar = () => {
       >
         {!openSidebar ? <IoMenu size={30} /> : <IoClose size={30} />}
       </div>
-      <h3 className='flex-1 font-extrabold tracking-wider text-center text-primary'>
+      <h2 className='flex-1 font-extrabold text-center text-primary'>
         ishop
-      </h3>
+      </h2>
     </nav>
   );
 };

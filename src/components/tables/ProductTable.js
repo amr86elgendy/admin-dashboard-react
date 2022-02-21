@@ -1,16 +1,26 @@
 import { useMemo } from 'react';
-import { useTable } from 'react-table';
-// import { productsCols } from './Columns';
+import { useSortBy, useTable } from 'react-table';
 import { useGlobalContext } from '../../context/global';
 import DeleteModal from '../../routes/products/DeleteModal';
+import { GoArrowBoth, GoArrowUp, GoArrowDown } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 
 const ProductTable = ({ products }) => {
   const { deleteModal, dispatch } = useGlobalContext();
+
+  const sortType = useMemo(() => (rowA, rowB, columnId) => {
+    if (rowA?.original[columnId] > rowB?.original[columnId]) return 1;
+    if (rowB?.original[columnId] > rowA?.original[columnId]) return -1;
+    return 0;
+  }, []);
+
+  const data = useMemo(() => products, [products]);
   const columns = useMemo(
     () => [
       {
         Header: 'name',
+        align: 'left',
+        disableSortBy: true,
         accessor: ({ _id, images, name }) => (
           <div className='flex items-center'>
             <div className='flex-shrink-0 w-10 h-10'>
@@ -48,6 +58,7 @@ const ProductTable = ({ products }) => {
           </>
         ),
         className: 'text-center',
+        sortType,
       },
       {
         Header: 'sold',
@@ -57,6 +68,7 @@ const ProductTable = ({ products }) => {
           </span>
         ),
         className: 'text-center',
+        sortType,
       },
       {
         Header: 'price',
@@ -70,32 +82,42 @@ const ProductTable = ({ products }) => {
       },
       {
         id: 'expander',
+        disableSortBy: true,
         className: 'text-sm font-medium text-right',
-        accessor: ({ _id }) => (
-          <>
-            <Link to={`/products/update/${_id}`}>
-              <button className='mr-2 text-blue-500 hover:text-blue-700'>
-                Edit
+        accessor: ({ _id }) => {
+          return (
+            <>
+              <Link to={`/products/update/${_id}`}>
+                <button className='mr-2 text-blue-500 hover:text-blue-700'>
+                  Edit
+                </button>
+              </Link>
+              <button
+                className='text-red-500 hover:text-red-700'
+                onClick={() => dispatch('OPEN_DELETE_MODAL', { id: _id })}
+              >
+                Delete
               </button>
-            </Link>
-            <button
-              className='text-red-500 hover:text-red-700'
-              onClick={() => dispatch('OPEN_DELETE_MODAL', {id: _id})}
-            >
-              Delete
-            </button>
-          </>
-        ),
+            </>
+          );
+        },
       },
     ],
-    []
+    [dispatch, sortType]
   );
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
-      columns,
-      data: products,
-    });
-  
+
+  const { getTableProps, getTableBodyProps, headers, rows, prepareRow } =
+    useTable(
+      {
+        columns,
+        data,
+        initialState: {
+          openModal: (id) => dispatch('OPEN_DELETE_MODAL', { id }),
+        },
+      },
+      useSortBy
+    );
+
   return (
     <>
       <div className='flex flex-col mb-8'>
@@ -108,25 +130,49 @@ const ProductTable = ({ products }) => {
               >
                 {/* Table Header */}
                 <thead className='bg-gray-100'>
-                  {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                      {headerGroup.headers.map((column) => {
-                        // console.log(column);
-                        return (
-                          <th
-                            {...column.getHeaderProps()}
-                            className={`px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase ${
-                              column.Header === 'name'
-                                ? 'text-left'
-                                : 'text-center'
-                            }`}
-                          >
-                            {column.render('Header')}
-                          </th>
-                        );
-                      })}
-                    </tr>
-                  ))}
+                  <tr>
+                    {headers.map((column) => {
+                      // console.log(column);
+                      return (
+                        <th
+                          {...column.getHeaderProps(
+                            column.getSortByToggleProps()
+                          )}
+                          className={`px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase whitespace-nowrap text-${
+                            column.align || 'center'
+                          }`}
+                        >
+                          {column.render('Header')}
+                          {
+                            <span>
+                              {column.canSort ? (
+                                column.isSorted ? (
+                                  column.isSortedDesc ? (
+                                    <GoArrowDown
+                                      className='inline mx-2'
+                                      size={18}
+                                    />
+                                  ) : (
+                                    <GoArrowUp
+                                      className='inline mx-2'
+                                      size={18}
+                                    />
+                                  )
+                                ) : (
+                                  <GoArrowBoth
+                                    className='inline mx-2'
+                                    size={18}
+                                  />
+                                )
+                              ) : (
+                                ''
+                              )}
+                            </span>
+                          }
+                        </th>
+                      );
+                    })}
+                  </tr>
                 </thead>
                 {/* Table Body */}
                 <tbody
@@ -139,7 +185,7 @@ const ProductTable = ({ products }) => {
                       <tr {...row.getRowProps()}>
                         {row.cells.map((cell) => {
                           const { className } = cell.column;
-                          console.log(cell);
+                          // console.log(cell);
                           return (
                             <td
                               {...cell.getCellProps()}

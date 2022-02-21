@@ -17,6 +17,16 @@ const reducer = (state, action) => {
         ...state,
         deleteModal: { open: false, id: null },
       };
+    case 'OPEN_DETAIL_MODAL':
+      return {
+        ...state,
+        detailModal: { open: true, id: action.payload.id },
+      };
+    case 'CLOSE_DETAIL_MODAL':
+      return {
+        ...state,
+        detailModal: { open: false, id: null },
+      };
     default:
       return state;
   }
@@ -27,6 +37,10 @@ const initialState = {
   openSidebar: false,
   openSidebarFull: false,
   deleteModal: {
+    open: false,
+    id: null,
+  },
+  detailModal: {
     open: false,
     id: null,
   },

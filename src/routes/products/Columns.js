@@ -17,6 +17,7 @@ export const productsCols = [
         </div>
       </div>
     ),
+    Filter: 'name'
   },
   {
     Header: 'brand',

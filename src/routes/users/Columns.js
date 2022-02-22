@@ -6,7 +6,7 @@ export const UsersCols = [
     Header: 'name',
     align: 'left',
     disableSortBy: true,
-    accessor: ({ _id, name }) => (
+    accessor: ({ email, name }) => (
       <div className='flex items-center'>
         <div className='flex-shrink-0 w-10 h-10'>
           <img
@@ -17,10 +17,13 @@ export const UsersCols = [
         </div>
         <div className='ml-4'>
           <div className='text-sm font-medium text-gray-900'>{name}</div>
-          <div className='text-sm text-gray-500'>{_id}</div>
+          <div className='text-sm text-gray-500'>{email}</div>
         </div>
       </div>
     ),
+    Filter: (props) => {
+      console.log(props);
+    }
   },
   {
     Header: 'orders',
